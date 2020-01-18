@@ -3,6 +3,7 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import Home from './view/Home'
 import Diagnose from './view/Diagnose'
+import Result from './view/Result'
 
 const AppNavigator = createStackNavigator({
     Home : {
@@ -10,6 +11,9 @@ const AppNavigator = createStackNavigator({
     },
     Diagnose : {
         screen : Diagnose
+    },
+    Result : {
+        screen : Result
     }
 },{
     initialRouteName : 'Home',

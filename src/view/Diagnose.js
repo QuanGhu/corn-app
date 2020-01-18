@@ -115,7 +115,7 @@ export default class Form extends Component {
                         justifyContent: 'center',
                         alignContent: 'center'
                         }}>
-                            <Button style={{justifyContent: 'center'}}>
+                            <Button style={{justifyContent: 'center'}} onPress={() => this.props.navigation.navigate('Result')}>
                                 <Text style={ { textAlign : 'center', color : 'white'}}> Analisa </Text>
                             </Button>
                     </View>
