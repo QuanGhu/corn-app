@@ -36,7 +36,9 @@ class Home extends React.Component {
                                     backgroundColor : '#2c0692',
                                     color : '#fff',
                                     marginTop : 45
-                                }} block>
+                                }} 
+                            onPress={() => this.props.navigation.navigate('Diagnose')}
+                            block>
                                     <Text style={{
                                         color : '#fff'
                                     }}>Mulai</Text>
