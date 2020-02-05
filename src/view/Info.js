@@ -20,14 +20,22 @@ class Home extends React.Component {
                                 fontSize : 14,
                                 fontWeight : 'bold'
                             }}>
-                                Sistem Pakar Mendiagnosis Hama Pada Tanaman Jagung
+                                Informasi Pembuat Program
                             </Text>
                             <Text style={ {
-                                textAlign : 'center',
+                                textAlign : 'left',
                                 fontSize : 12,
                                 marginTop : 15
                             }}>
-                                Selamat datang, silakan anda pakai aplikasi ini untuk mendiagnosa hama pada tanaman jagung anda
+                                Nama : Nama
+                            </Text>
+
+                            <Text style={ {
+                                textAlign : 'left',
+                                fontSize : 12,
+                                marginTop : 5
+                            }}>
+                                Nomor BP : 12312312
                             </Text>
 
                             <Button style={{
@@ -35,13 +43,13 @@ class Home extends React.Component {
                                     padding : 15,
                                     backgroundColor : '#2c0692',
                                     color : '#fff',
-                                    marginTop : 45
+                                    marginTop : 15
                                 }} 
                             onPress={() => this.props.navigation.navigate('MainMenu')}
                             block>
                                     <Text style={{
                                         color : '#fff'
-                                    }}>Masuk</Text>
+                                    }}>Kembali Ke Menu Utama</Text>
                             </Button>
                         </Body>
                     </CardItem>

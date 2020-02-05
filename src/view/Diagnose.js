@@ -4,24 +4,14 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert,
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 import { Button, Container, Card, Toast } from 'native-base';
+import axios from 'axios';
 
 export default class Form extends Component {
   constructor(props) {
     super(props)
 
     this.state = {
-      causes: [{
-        id : 1,
-        name : 'Penyebab A'
-      },
-      {
-        id : 2,
-        name : 'Penyebab B'
-      },
-      {
-        id : 3,
-        name : 'Penyebab C'
-      }],
+      causes: [],
       selectedCause: []
     }
   }
@@ -48,8 +38,24 @@ export default class Form extends Component {
     return this.state.selectedCause.length;
   }
 
-  componentDidMount = async () => {
-    
+  componentDidMount = () => {
+    axios({
+        method : 'GET',
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : "http://35.240.237.198/api/cause",
+    })   
+    .then((res) => {
+        console.log(res.data.data)
+        this.setState({
+          causes : res.data.data
+      })
+    })
+    .catch((err) => {
+      console.log(err)
+    })
   }
 
   renderHeader = () => {

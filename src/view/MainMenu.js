@@ -20,14 +20,14 @@ class Home extends React.Component {
                                 fontSize : 14,
                                 fontWeight : 'bold'
                             }}>
-                                Sistem Pakar Mendiagnosis Hama Pada Tanaman Jagung
+                                Menu Utama
                             </Text>
                             <Text style={ {
                                 textAlign : 'center',
                                 fontSize : 12,
                                 marginTop : 15
                             }}>
-                                Selamat datang, silakan anda pakai aplikasi ini untuk mendiagnosa hama pada tanaman jagung anda
+                                Silakan Pilih Menu Yang Tersedia
                             </Text>
 
                             <Button style={{
@@ -37,12 +37,40 @@ class Home extends React.Component {
                                     color : '#fff',
                                     marginTop : 45
                                 }} 
-                            onPress={() => this.props.navigation.navigate('MainMenu')}
+                            onPress={() => this.props.navigation.navigate('Info')}
                             block>
                                     <Text style={{
                                         color : '#fff'
-                                    }}>Masuk</Text>
+                                    }}>Informasi Pembuat Program</Text>
                             </Button>
+                            <Button style={{
+                                    textAlign : 'center',
+                                    padding : 15,
+                                    backgroundColor : '#2c0692',
+                                    color : '#fff',
+                                    marginTop : 15
+                                }} 
+                            onPress={() => this.props.navigation.navigate('Diagnose')}
+                            block>
+                                    <Text style={{
+                                        color : '#fff'
+                                    }}>Mulai Sistem Pakar</Text>
+                            </Button>
+                            <Button style={{
+                                    textAlign : 'center',
+                                    padding : 15,
+                                    backgroundColor : 'transparent',
+                                    color : '#2c0692',
+                                    marginTop : 15,
+                                    borderColor : '#2c0692'
+                                }} 
+                            onPress={() => this.props.navigation.navigate('Home')}
+                            block>
+                                    <Text style={{
+                                        color : '#2c0692'
+                                    }}>Keluar</Text>
+                            </Button>
+                            
                         </Body>
                     </CardItem>
                 </Card>
