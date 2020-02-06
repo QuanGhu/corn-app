@@ -12,7 +12,13 @@ class Result extends React.Component {
         }
     }
     componentDidMount = () => {
-        
+        const data = this.props.navigation.state.params.data
+        console.log(data)
+        this.setState({
+            result : data.nama_penyakit,
+            causes : data.gejala,
+            solutions : data.solusi,
+        })
     }
 
     render() {
@@ -30,26 +36,30 @@ class Result extends React.Component {
                                         <Text>Gejala</Text>
                                     </ListItem>
 
-                                    <View>
-                                        <ListItem>
-                                            <Text>Gejala A</Text>
-                                        </ListItem>
-                                    </View>                  
+                                    {this.state.causes.map((data, index) => (
+                                        <View key={index}>
+                                            <ListItem>
+                                                <Text>{data}</Text>
+                                            </ListItem>
+                                        </View>
+                                    ))}                   
                                     
                                     <ListItem itemDivider>
                                         <Text>Hama</Text>
                                     </ListItem>
                                     <ListItem>
-                                        <Text>Nama Hama A</Text>
+                                        <Text>{this.state.result}</Text>
                                     </ListItem>
                                     <ListItem itemDivider>
-                                        <Text>Pestisida</Text>
+                                        <Text>Solusi</Text>
                                     </ListItem>
-                                    <View >
-                                        <ListItem>
-                                            <Text>Pestisida A</Text>
-                                        </ListItem>
-                                    </View>  
+                                    {this.state.solutions.map(data => (
+                                        <View key={data.id}>
+                                            <ListItem>
+                                                <Text>{data.name}</Text>
+                                            </ListItem>
+                                        </View>
+                                    ))}     
                                 </List>
 
                                 <Button style={{

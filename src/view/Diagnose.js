@@ -3,7 +3,7 @@ import { StyleSheet, Text, View, TouchableOpacity, FlatList, Alert,
   AsyncStorage
 } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
-import { Button, Container, Card, Toast } from 'native-base';
+import { Button, Container, Card, Toast, Content } from 'native-base';
 import axios from 'axios';
 
 export default class Form extends Component {
@@ -21,7 +21,7 @@ export default class Form extends Component {
       if (item.id === hey.id) {
         item.check = !item.check
         if (item.check === true) {
-          this.state.selectedCause.push(item);
+          this.state.selectedCause.push(item.id);
         } else if (item.check === false) {
           const i = this.state.selectedCause.indexOf(item)
           if (1 != -1) {
@@ -62,40 +62,60 @@ export default class Form extends Component {
     return <Header/>
   };
 
-  analyze = async () => {
-      
+  analyze() {
+    axios({
+        method : 'POST',
+        headers : {
+            'Accept' : 'application/json',
+            'Content-Type' : 'application/json'
+        },
+        url : "http://35.240.237.198/api/diagnose/process",
+        data : {
+          causes_id : this.state.selectedCause
+        }
+    })   
+    .then((res) => {
+        this.props.navigation.navigate('Result',{
+          data : res.data.data
+        })
+    })
+    .catch((error) => {
+      console.log(error.response)
+    })
+    
   }
 
   render() {
     return (
       <Container>
-        <Card style={{ padding : 15, flex : 1 }}>
-            <View style={styles.storyContainer}>
-                <FlatList data={this.state.causes} ListHeaderComponent={this.renderHeader} keyExtractor={(item, index) => `list-item-${index}`} extraData={this.state} renderItem={({item}) => {
-                    return <TouchableOpacity style={{
-                        flexDirection: 'row',
-                        padding: 10,
-                        borderBottomWidth: 1,
-                        borderStyle: 'solid',
-                        borderColor: '#ecf0f1'
-                    }} onPress={() => {
-                    this.press(item)
-                    }}>
-                    <View style={{
-                        flex: 3,
-                        alignItems: 'flex-start',
-                        justifyContent: 'center'
-                    }}>
-                        {item.check
-                        ? (
-                            <Text style={{
-                            fontWeight: 'bold'
-                            }}>{`${item.name}`}</Text>
-                        )
-                        : (
-                            <Text>{`${item.name}`}</Text>
-                        )}
-                    </View>
+        <Content>
+          <Card style={{ padding : 15, flex : 1 }}>
+              <View style={styles.storyContainer}>
+                  <FlatList data={this.state.causes} ListHeaderComponent={this.renderHeader} keyExtractor={(item, index) => `list-item-${index}`} extraData={this.state} renderItem={({item}) => {
+                      return <TouchableOpacity style={{
+                          flexDirection: 'row',
+                          padding: 10,
+                          borderBottomWidth: 1,
+                          borderStyle: 'solid',
+                          borderColor: '#ecf0f1'
+                      }} onPress={() => {
+                      this.press(item)
+                      }}>
+                        <View style={{
+                            flex: 3,
+                            alignItems: 'flex-start',
+                            justifyContent: 'center'
+                        }}>
+                            {item.check
+                            ? (
+                                <Text style={{
+                                fontWeight: 'bold'
+                                }}>{`${item.name}`}</Text>
+                            )
+                            : (
+                                <Text>{`${item.name}`}</Text>
+                            )}
+                        </View>
                         <View style={{
                             flex: 1,
                             alignItems: 'flex-end',
@@ -109,27 +129,31 @@ export default class Form extends Component {
                                 <Icon name="ios-square-outline" size={30} color={darkGrey}></Icon>
                             )}
                         </View>
-                    </TouchableOpacity>
-                }}/>
-            </View>
-            <View style={{ flexGrow : 2, marginTop : 40, flexDirection : 'row'}}>
-            {(this.state.selectedCause.length > 1)
-                ? (
-                    <View style={{
-                        flex: 1,
-                        alignItems: 'stretch',
-                        justifyContent: 'center',
-                        alignContent: 'center'
-                        }}>
-                            <Button style={{justifyContent: 'center'}} onPress={() => this.props.navigation.navigate('Result')}>
-                                <Text style={ { textAlign : 'center', color : 'white'}}> Analisa </Text>
-                            </Button>
-                    </View>
-                )
-                : null
-                }
-            </View>
-        </Card>
+                      </TouchableOpacity>
+                  }}/>
+              </View>
+          </Card>
+          <Card>
+            <View>
+              {(this.state.selectedCause.length > 1)
+                  ? (
+                      <View style={{
+                          flex: 1,
+                          alignItems: 'stretch',
+                          justifyContent: 'center',
+                          alignContent: 'center'
+                          }}>
+                              <Button style={{justifyContent: 'center', marginTop : 15}} onPress={this.analyze.bind(this) }>
+                                  <Text style={ { textAlign : 'center', color : 'white'}}> Analisa </Text>
+                              </Button>
+                      </View>
+                  )
+                  : null
+                  }
+              </View>
+          </Card>
+
+        </Content>
       </Container>
     );
   };
@@ -149,10 +173,11 @@ const Header = () => (
 
 const styles = StyleSheet.create({
   container: {
-    flex : 1,
+    flex : 0.9,
     backgroundColor: 'white',
     paddingTop: 20,
     paddingBottom: 0,
+    marginBottom: 50
   },
   containerFooter: {
     height: 50,
@@ -163,7 +188,6 @@ const styles = StyleSheet.create({
   searchContainer: {
     flex: 1,
     padding: 5,
-
     flexDirection: 'row',
     alignItems: 'center',
     backgroundColor: '#ecf0f1'
